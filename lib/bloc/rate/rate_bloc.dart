@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../repositories/rate_repository.dart';
@@ -34,9 +35,22 @@ class RateBloc extends Bloc<RateEvent, RateState> {
 
   RateBloc(this.rateRepository) : super(RateInitial()) {
     on<FetchRateEvent>((event, emit) async {
-      emit(RateLoading());
-      final rate = await rateRepository.fetchRate(curId: event.curId);
-      emit(RateLoaded(rate));
+      try {
+        emit(RateLoading());
+        final connectivity_result = await Connectivity().checkConnectivity();
+        
+        if (connectivity_result.contains(ConnectivityResult.ethernet) ||
+           connectivity_result.contains(ConnectivityResult.wifi) ||
+           connectivity_result.contains(ConnectivityResult.mobile)) {
+          final rate = await rateRepository.fetchRate(curId: event.curId);
+          emit(RateLoaded(rate));
+        }
+        else {
+          emit(RateError('No internet connection available. Please check your network settings.'));
+        }
+      } on Exception catch (e) {
+        emit(RateError(e.toString()));
+      }
     });
   }
 

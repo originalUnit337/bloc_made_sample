@@ -7,13 +7,19 @@ import 'pages/home_page.dart';
 import 'repositories/rate_repository.dart';
 
 void main() async {
-  final ogo = await RateRepository().getAlfaOnlineBuyUSD();
+  //final ogo = await RateRepository().getAlfaOnlineBuyUSD();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _isDarkMode = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,6 +28,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      darkTheme: ThemeData(brightness: Brightness.dark),
+      //themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
       // home: BlocProvider(
       //   create: (context) => CounterBloc(),
       //   child: const CounterPage(),
@@ -30,7 +38,10 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: AppNavigator.generateRoute,
       home: BlocProvider(
         create: (context) => RateBloc(RateRepository()),
-        child: HomePage(),
+        child: HomePage(
+          // isDarkMode: _isDarkMode,
+          // onThemeChanged: (value) => _isDarkMode = value,
+        ),
       ),
     );
   }

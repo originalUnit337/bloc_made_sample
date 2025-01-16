@@ -12,8 +12,8 @@ class RateRepository {
       url += '?ondate=$onDate';
     }
 
-    final response = await http.get(Uri.parse(url));
-
+    final response = await http.get(Uri.parse(url)).timeout(const Duration(seconds: 10));
+    
     if (response.statusCode == 200) {
       if (curId != null) {
         return Rate.fromJson(json.decode(response.body));
