@@ -1,4 +1,9 @@
+import 'package:bloc_made_sample/bloc/theme/theme_event.dart';
+import 'package:bloc_made_sample/bloc/theme/theme_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/theme/theme_bloc.dart';
 
 class HomePage extends StatefulWidget {
   // final bool isDarkMode;
@@ -18,29 +23,54 @@ class _HomePageState extends State<HomePage> {
     'Chats',
     'Profile',
   ];
-  bool _isDarkMode = false;
+  final bool _isDarkMode = false;
   // final List<Icon> _icons = [
   //   const Icon(Icons.light_mode),
   //   const Icon(Icons.dark_mode),
   // ];
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context2) {
     return Scaffold(
       appBar: AppBar(
         title: Text(_titles[_currentPageIndex]),
         actions: [
-          IconButton(
-            icon: Icon(Icons.dark_mode),
-            onPressed: () {}
-            // icon: widget.isDarkMode ? const Icon(Icons.light_mode) : const Icon(Icons.dark_mode),
-            // onPressed: () {
-            //   widget.onThemeChanged(!widget.isDarkMode);
-            // },
+          BlocProvider(
+            create: (context) => ThemeBloc(),
+            child:
+                BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
+              if (state is LightThemeState) {
+                return IconButton(
+                    icon: const Icon(Icons.dark_mode),
+                    onPressed: () {
+                      context2.read<ThemeBloc>().add(ToggleThemeEvent());
+                      context.read<ThemeBloc>().add(ToggleThemeEvent());
+                    }
+                    // icon: widget.isDarkMode ? const Icon(Icons.light_mode) : const Icon(Icons.dark_mode),
+                    // onPressed: () {
+                    //   widget.onThemeChanged(!widget.isDarkMode);
+                    // },
+                    );
+              } else if (state is DarkThemeState) {
+                return IconButton(
+                    icon: const Icon(Icons.light_mode),
+                    onPressed: () {
+                      context2.read<ThemeBloc>().add(ToggleThemeEvent());
+                      context.read<ThemeBloc>().add(ToggleThemeEvent());
+                    });
+              } else
+                return Center();
+            }),
           ),
+          // IconButton(
+          //     icon: context.read<ThemeBloc>().state is LightThemeState
+          //         ? const Icon(Icons.light_mode)
+          //         : const Icon(Icons.dark_mode),
+          //     onPressed: () =>
+          //         context.read<ThemeBloc>().add(ToggleThemeEvent()))
         ],
       ),
       body: [
-        SingleChildScrollView(
+        const SingleChildScrollView(
           child: Column(
             children: [
               Text('Regular payments'),
@@ -55,7 +85,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        Center(),
+        const Center(),
         Center(
           child: ElevatedButton(
             onPressed: () {
@@ -64,8 +94,8 @@ class _HomePageState extends State<HomePage> {
             child: const Text('Get Currency Rate'),
           ),
         ),
-        Center(),
-        Center(),
+        const Center(),
+        const Center(),
       ][_currentPageIndex],
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) => setState(() {

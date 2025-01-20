@@ -9,7 +9,7 @@ class CurrencyPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Currency page'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('This is the currency page'),
       ),
     );

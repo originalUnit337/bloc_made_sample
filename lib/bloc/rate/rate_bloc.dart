@@ -37,16 +37,16 @@ class RateBloc extends Bloc<RateEvent, RateState> {
     on<FetchRateEvent>((event, emit) async {
       try {
         emit(RateLoading());
-        final connectivity_result = await Connectivity().checkConnectivity();
-        
-        if (connectivity_result.contains(ConnectivityResult.ethernet) ||
-           connectivity_result.contains(ConnectivityResult.wifi) ||
-           connectivity_result.contains(ConnectivityResult.mobile)) {
+        final connectivityResult = await Connectivity().checkConnectivity();
+
+        if (connectivityResult.contains(ConnectivityResult.ethernet) ||
+            connectivityResult.contains(ConnectivityResult.wifi) ||
+            connectivityResult.contains(ConnectivityResult.mobile)) {
           final rate = await rateRepository.fetchRate(curId: event.curId);
           emit(RateLoaded(rate));
-        }
-        else {
-          emit(RateError('No internet connection available. Please check your network settings.'));
+        } else {
+          emit(RateError(
+              'No internet connection available. Please check your network settings.'));
         }
       } on Exception catch (e) {
         emit(RateError(e.toString()));

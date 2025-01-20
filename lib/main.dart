@@ -1,3 +1,5 @@
+import 'package:bloc_made_sample/bloc/theme/theme_bloc.dart';
+import 'package:bloc_made_sample/bloc/theme/theme_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,30 +21,37 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _isDarkMode = false;
+  final bool _isDarkMode = false;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      darkTheme: ThemeData(brightness: Brightness.dark),
-      //themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      // home: BlocProvider(
-      //   create: (context) => CounterBloc(),
-      //   child: const CounterPage(),
-      // ),
-      initialRoute: '/',
-      onGenerateRoute: AppNavigator.generateRoute,
-      home: BlocProvider(
-        create: (context) => RateBloc(RateRepository()),
-        child: HomePage(
-          // isDarkMode: _isDarkMode,
-          // onThemeChanged: (value) => _isDarkMode = value,
-        ),
-      ),
+    return BlocProvider(
+      create: (context) => ThemeBloc(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Material App',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          darkTheme: ThemeData(brightness: Brightness.dark),
+          themeMode:
+              state is LightThemeState ? ThemeMode.light : ThemeMode.dark,
+          //themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          // home: BlocProvider(
+          //   create: (context) => CounterBloc(),
+          //   child: const CounterPage(),
+          // ),
+          initialRoute: '/',
+          onGenerateRoute: AppNavigator.generateRoute,
+          home: BlocProvider(
+            create: (context) => RateBloc(RateRepository()),
+            child: const HomePage(
+                // isDarkMode: _isDarkMode,
+                // onThemeChanged: (value) => _isDarkMode = value,
+                ),
+          ),
+        );
+      }),
     );
   }
 }
