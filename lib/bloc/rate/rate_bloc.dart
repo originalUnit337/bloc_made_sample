@@ -54,16 +54,16 @@ class RateBloc extends Bloc<RateEvent, RateState> {
     });
   }
 
-  @override
-  Stream<RateState> mapEventToState(RateEvent event) async* {
-    if (event is FetchRateEvent) {
-      yield RateLoading();
-      try {
-        final rate = await rateRepository.fetchRate(curId: event.curId);
-        yield RateLoaded(rate!);
-      } catch (error) {
-        yield RateError('Error fetching rate: $error');
-      }
-    }
-  }
+  // @override
+  // Stream<RateState> mapEventToState(RateEvent event) async* {
+  //   if (event is FetchRateEvent) {
+  //     yield RateLoading();
+  //     try {
+  //       final rate = await rateRepository.fetchRate(curId: event.curId);
+  //       yield RateLoaded(rate!);
+  //     } catch (error) {
+  //       yield RateError('Error fetching rate: $error');
+  //     }
+  //   }
+  // }
 }

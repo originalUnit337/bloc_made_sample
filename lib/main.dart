@@ -5,11 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/rate/rate_bloc.dart';
 import 'navigation/navigation.dart';
-import 'pages/home_page.dart';
+import 'pages/home page/home_page.dart';
 import 'repositories/rate_repository.dart';
+import 'themes/appTheme.dart';
 
 void main() async {
-  //final ogo = await RateRepository().getAlfaOnlineBuyUSD();
   runApp(const MyApp());
 }
 
@@ -21,7 +21,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final bool _isDarkMode = false;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -30,17 +29,16 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Material App',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          darkTheme: ThemeData(brightness: Brightness.dark),
-          themeMode:
-              state is LightThemeState ? ThemeMode.light : ThemeMode.dark,
-          //themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
-          // home: BlocProvider(
-          //   create: (context) => CounterBloc(),
-          //   child: const CounterPage(),
-          // ),
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: switch (state) {
+            ThemeInitialState() => ThemeMode.system,
+            LightThemeState() => ThemeMode.light,
+            DarkThemeState() => ThemeMode.dark,
+            // TODO: Handle this case.
+            ThemeState() => throw UnimplementedError(),
+          },
+              // state is LightThemeState ? ThemeMode.light : ThemeMode.dark,
           initialRoute: '/',
           onGenerateRoute: AppNavigator.generateRoute,
           home: BlocProvider(

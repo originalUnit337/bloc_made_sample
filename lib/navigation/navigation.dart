@@ -2,7 +2,7 @@ import 'package:bloc_made_sample/pages/counter_page.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/currency_page.dart';
-import '../pages/home_page.dart';
+import '../pages/home page/home_page.dart';
 import '../pages/rate_page.dart';
 
 class AppNavigator {
