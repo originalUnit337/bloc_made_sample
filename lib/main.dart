@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
             // TODO: Handle this case.
             ThemeState() => throw UnimplementedError(),
           },
-              // state is LightThemeState ? ThemeMode.light : ThemeMode.dark,
+          // state is LightThemeState ? ThemeMode.light : ThemeMode.dark,
           initialRoute: '/',
           onGenerateRoute: AppNavigator.generateRoute,
           home: BlocProvider(

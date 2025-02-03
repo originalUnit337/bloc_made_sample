@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/theme/theme_bloc.dart';
+import 'widgets/home_widget.dart';
 
 class HomePage extends StatefulWidget {
   // final bool isDarkMode;
@@ -76,14 +77,15 @@ class _HomePageState extends State<HomePage> {
       body: [
         const PaymentWidget(),
         const Center(),
-        Center(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/ratePage');
-            },
-            child: const Text('Get Currency Rate'),
-          ),
-        ),
+        // Center(
+        //   child: ElevatedButton(
+        //     onPressed: () {
+        //       Navigator.pushNamed(context, '/ratePage');
+        //     },
+        //     child: const Text('Get Currency Rate'),
+        //   ),
+        // ),
+        HomeWidget(),
         const Center(),
         const Center(),
       ][_currentPageIndex],

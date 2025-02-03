@@ -53,9 +53,7 @@ class PaymentWidget extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   'bla-bla',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium,
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
                             ],
@@ -95,7 +93,7 @@ class PaymentWidget extends StatelessWidget {
                     children: List.generate(
                       2,
                       (index) => SizedBox(
-                        height: screenSize.height * 0.15,
+                        height: screenSize.height * 0.17,
                         child: Padding(
                           padding: const EdgeInsets.all(paddingAll),
                           child: Column(
@@ -106,7 +104,7 @@ class PaymentWidget extends StatelessWidget {
                                 index == 0
                                     ? Icons.card_giftcard
                                     : Icons.card_membership,
-                                size: screenWidth * 0.15,
+                                size: screenWidth * 0.1,
                               ),
                               Text(
                                 index == 0
@@ -126,7 +124,7 @@ class PaymentWidget extends StatelessWidget {
                     children: List.generate(
                       2,
                       (index) => SizedBox(
-                        height: screenSize.height * 0.15,
+                        height: screenSize.height * 0.17,
                         child: Padding(
                           padding: const EdgeInsets.all(paddingAll),
                           child: Column(
@@ -137,7 +135,7 @@ class PaymentWidget extends StatelessWidget {
                                 index == 0
                                     ? Icons.account_balance
                                     : Icons.account_balance_wallet,
-                                size: screenWidth * 0.15,
+                                size: screenWidth * 0.1,
                               ),
                               Text(
                                 index == 0
@@ -160,7 +158,7 @@ class PaymentWidget extends StatelessWidget {
                     children: List.generate(
                       2,
                       (index) => SizedBox(
-                        height: screenSize.height * 0.15,
+                        height: screenSize.height * 0.17,
                         child: Padding(
                           padding: const EdgeInsets.all(paddingAll),
                           child: Column(
@@ -171,7 +169,7 @@ class PaymentWidget extends StatelessWidget {
                                 index == 0
                                     ? Icons.transcribe
                                     : Icons.integration_instructions,
-                                size: screenWidth * 0.15,
+                                size: screenWidth * 0.1,
                               ),
                               Text(
                                 index == 0
@@ -225,7 +223,7 @@ class PaymentWidget extends StatelessWidget {
                                 index == 0
                                     ? Icons.currency_exchange
                                     : Icons.computer_rounded,
-                                size: screenWidth * 0.15,
+                                size: screenWidth * 0.1,
                               ),
                               Text(
                                 index == 0
@@ -257,7 +255,7 @@ class PaymentWidget extends StatelessWidget {
                             children: [
                               Icon(
                                 index == 0 ? Icons.house : Icons.credit_card,
-                                size: screenWidth * 0.15,
+                                size: screenWidth * 0.1,
                               ),
                               Text(
                                 index == 0
