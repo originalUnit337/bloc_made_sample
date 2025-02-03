@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                     }
                     // icon: widget.isDarkMode ? const Icon(Icons.light_mode) : const Icon(Icons.dark_mode),
                     // onPressed: () {
-                    //   widget.onThemeChanged(!widget.isDarkMode);
+                    // c ll widget.onThemeChanged(!widget.isDarkMode);
                     // },
                     );
               } else if (state is DarkThemeState) {
