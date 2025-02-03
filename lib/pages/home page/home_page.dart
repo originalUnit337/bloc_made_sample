@@ -4,7 +4,9 @@ import 'package:bloc_made_sample/pages/home%20page/widgets/payment_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../bloc/rate/rate_bloc.dart';
 import '../../bloc/theme/theme_bloc.dart';
+import '../../repositories/rate_repository.dart';
 import 'widgets/home_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -85,7 +87,10 @@ class _HomePageState extends State<HomePage> {
         //     child: const Text('Get Currency Rate'),
         //   ),
         // ),
-        HomeWidget(),
+        BlocProvider(
+          create: (homeWidgetContext) => RateBloc(RateRepository()),
+          child: const HomeWidget(),
+        ),
         const Center(),
         const Center(),
       ][_currentPageIndex],

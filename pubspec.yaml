@@ -38,6 +38,7 @@ dependencies:
   http: ^1.2.2
   html: ^0.15.5
   fl_chart: ^0.70.2
+  shimmer: ^3.0.0
   #connectivity_plus: ^6.1.2
   #internet_connection_checker: ^3.0.1
 

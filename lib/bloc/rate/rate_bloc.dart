@@ -6,9 +6,9 @@ import '/models/rate.dart';
 abstract class RateEvent {}
 
 class FetchRateEvent extends RateEvent {
-  final int curId;
+  final int? curId;
 
-  FetchRateEvent(this.curId);
+  FetchRateEvent({this.curId});
 }
 
 abstract class RateState {}
@@ -18,9 +18,10 @@ class RateInitial extends RateState {}
 class RateLoading extends RateState {}
 
 class RateLoaded extends RateState {
-  final Rate rate;
+  final Rate? rate;
+  final Map<String, Rate>? rateMap;
 
-  RateLoaded(this.rate);
+  RateLoaded({this.rate, this.rateMap});
 }
 
 class RateError extends RateState {
@@ -47,10 +48,17 @@ class RateBloc extends Bloc<RateEvent, RateState> {
         //   emit(RateError(
         //       'No internet connection available. Please check your network settings.'));
         // }
-        final rate = await rateRepository
-            .fetchRate(curId: event.curId)
-            .timeout(const Duration(seconds: 30));
-        emit(RateLoaded(rate));
+        if (event.curId == null) {
+          final Map<String, Rate> rateMap = await rateRepository
+              .fetchRate()
+              .timeout(const Duration(seconds: 30));
+          emit(RateLoaded(rateMap: rateMap));
+        } else {
+          final Rate rate = await rateRepository
+              .fetchRate(curId: event.curId)
+              .timeout(const Duration(seconds: 30));
+          emit(RateLoaded(rate: rate));
+        }
       } on Exception catch (e) {
         emit(RateError(e.toString()));
       }

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/rate/rate_bloc.dart';
 
 class RatePage extends StatelessWidget {
-  final int curId = 431;
+  final int curIdUSD = 431;
   const RatePage({super.key});
 
   @override
@@ -30,7 +30,7 @@ class RatePage extends StatelessWidget {
                       //const Text('Alfa online buy 1 USD: '),
                       //const Text('Alfa onlne sell 1 USD: '),
                       Text(
-                        'Currency: ${rate.curName}',
+                        'Currency: ${rate!.curName}',
                         style: const TextStyle(fontSize: 24),
                       ),
                       Text('Rate: ${rate.curOfficialRate}',
@@ -47,7 +47,9 @@ class RatePage extends StatelessWidget {
               return Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    context.read<RateBloc>().add(FetchRateEvent(curId));
+                    context
+                        .read<RateBloc>()
+                        .add(FetchRateEvent(curId: curIdUSD));
                   },
                   child: const Text('Load Rate'),
                 ),
