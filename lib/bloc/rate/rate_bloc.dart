@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../repositories/rate_repository.dart';
@@ -37,33 +36,37 @@ class RateBloc extends Bloc<RateEvent, RateState> {
     on<FetchRateEvent>((event, emit) async {
       try {
         emit(RateLoading());
-        final connectivityResult = await Connectivity().checkConnectivity();
+        //final connectivityResult = await Connectivity().checkConnectivity();
 
-        if (connectivityResult.contains(ConnectivityResult.ethernet) ||
-            connectivityResult.contains(ConnectivityResult.wifi) ||
-            connectivityResult.contains(ConnectivityResult.mobile)) {
-          final rate = await rateRepository.fetchRate(curId: event.curId);
-          emit(RateLoaded(rate));
-        } else {
-          emit(RateError(
-              'No internet connection available. Please check your network settings.'));
-        }
+        // if (connectivityResult.contains(ConnectivityResult.ethernet) ||
+        //     connectivityResult.contains(ConnectivityResult.wifi) ||
+        //     connectivityResult.contains(ConnectivityResult.mobile)) {
+        //   final rate = await rateRepository.fetchRate(curId: event.curId).timeout(const Duration(seconds: 30));
+        //   emit(RateLoaded(rate));
+        // } else {
+        //   emit(RateError(
+        //       'No internet connection available. Please check your network settings.'));
+        // }
+        final rate = await rateRepository
+            .fetchRate(curId: event.curId)
+            .timeout(const Duration(seconds: 30));
+        emit(RateLoaded(rate));
       } on Exception catch (e) {
         emit(RateError(e.toString()));
       }
     });
   }
 
-  @override
-  Stream<RateState> mapEventToState(RateEvent event) async* {
-    if (event is FetchRateEvent) {
-      yield RateLoading();
-      try {
-        final rate = await rateRepository.fetchRate(curId: event.curId);
-        yield RateLoaded(rate!);
-      } catch (error) {
-        yield RateError('Error fetching rate: $error');
-      }
-    }
-  }
+  // @override
+  // Stream<RateState> mapEventToState(RateEvent event) async* {
+  //   if (event is FetchRateEvent) {
+  //     yield RateLoading();
+  //     try {
+  //       final rate = await rateRepository.fetchRate(curId: event.curId);
+  //       yield RateLoaded(rate!);
+  //     } catch (error) {
+  //       yield RateError('Error fetching rate: $error');
+  //     }
+  //   }
+  // }
 }

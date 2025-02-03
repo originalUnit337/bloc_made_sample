@@ -1,9 +1,11 @@
 import 'package:bloc_made_sample/bloc/theme/theme_event.dart';
 import 'package:bloc_made_sample/bloc/theme/theme_state.dart';
+import 'package:bloc_made_sample/pages/home%20page/widgets/payment_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/theme/theme_bloc.dart';
+import '../../bloc/theme/theme_bloc.dart';
+import 'widgets/home_widget.dart';
 
 class HomePage extends StatefulWidget {
   // final bool isDarkMode;
@@ -32,13 +34,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context2) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_titles[_currentPageIndex]),
+        title: Text(
+          _titles[_currentPageIndex],
+          style: Theme.of(context2).textTheme.headlineLarge,
+        ),
         actions: [
           BlocProvider(
             create: (context) => ThemeBloc(),
             child:
                 BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
-              if (state is LightThemeState) {
+              if (state is LightThemeState || state is ThemeInitialState) {
                 return IconButton(
                     icon: const Icon(Icons.dark_mode),
                     onPressed: () {
@@ -70,30 +75,17 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: [
-        const SingleChildScrollView(
-          child: Column(
-            children: [
-              Text('Regular payments'),
-              Row(
-                children: [
-                  Text('Card payments'),
-                  Text('PayPal'),
-                  Text('Apple Pay'),
-                  Text('Google Pay'),
-                ],
-              ),
-            ],
-          ),
-        ),
+        const PaymentWidget(),
         const Center(),
-        Center(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/ratePage');
-            },
-            child: const Text('Get Currency Rate'),
-          ),
-        ),
+        // Center(
+        //   child: ElevatedButton(
+        //     onPressed: () {
+        //       Navigator.pushNamed(context, '/ratePage');
+        //     },
+        //     child: const Text('Get Currency Rate'),
+        //   ),
+        // ),
+        HomeWidget(),
         const Center(),
         const Center(),
       ][_currentPageIndex],
