@@ -13,7 +13,7 @@ class HomeWidget extends StatelessWidget {
         children: [
           Table(
             children: [
-              TableRow(
+              const TableRow(
                 children: [
                   Text('Currency'),
                   Text('Buy'),
@@ -24,37 +24,45 @@ class HomeWidget extends StatelessWidget {
                 children: [
                   ListTile(
                     leading: Image.asset('assets/images/united-states.png'),
-                    title: Text('1 USD'),
+                    title: const Text('1 USD'),
                   ),
-                  Text('3.4170'),
-                  Text('3.4500'),
+                  const Text('3.4170'),
+                  const Text('3.4500'),
                 ],
               ),
               TableRow(
                 children: [
                   ListTile(
                     leading: Image.asset('assets/images/european-union.png'),
-                    title: Text('1 EUR'),
+                    title: const Text('1 EUR'),
                   ),
-                  Text('3.5600'),
-                  Text('3.6200'),
+                  const Text('3.5600'),
+                  const Text('3.6200'),
                 ],
               ),
               TableRow(
                 children: [
                   ListTile(
                     leading: Image.asset('assets/images/russia.png'),
-                    title: Text('100 RUB'),
+                    title: const Text('100 RUB'),
                   ),
-                  Text('3.3800'),
-                  Text('3.4250'),
+                  const Text('3.3800'),
+                  const Text('3.4250'),
                 ],
               ),
             ],
           ),
           Container(
             height: 150,
-          )
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/ratePage');
+              },
+              child: const Text('Get Currency Rate'),
+            ),
+          ),
         ],
       ),
     );
